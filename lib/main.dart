@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_module/screens/auth_screen.dart';
+import 'package:firebase_module/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -23,7 +25,17 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: AuthScreen(),
+      // FirebaseAuth MANAGES ALL THE COMPLEXITY OF LOGIN/LOGOUT/SIGNUP/TOKEN
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.onAuthStateChanged,
+        builder: (ctx, userSnapshot) {
+          // IF THERE'S A TOKEN ATTACHED TO THE USERSNAPSHOT
+          if (userSnapshot.hasData) {
+            return ChatScreen();
+          }
+          return AuthScreen();
+        },
+      ),
     );
   }
 }
