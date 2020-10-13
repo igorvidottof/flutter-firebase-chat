@@ -16,7 +16,7 @@ class _NewMessageState extends State<NewMessage> {
     Firestore.instance.collection('chat').add({
       'text': _enteredMessage,
       // TIMESTAMP IS PROVIDED BY CLOUD FIRESTORE TO ORDER DOCUMENTS
-      'createdAt': Timestamp.now()
+      'createdAt': Timestamp.now(),
     });
     _controller.clear();
   }

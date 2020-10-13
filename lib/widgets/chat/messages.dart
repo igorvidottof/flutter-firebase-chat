@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_module/widgets/chat/message_bubble.dart';
 import 'package:flutter/material.dart';
 
 class Messages extends StatelessWidget {
@@ -21,9 +22,10 @@ class Messages extends StatelessWidget {
           // REVERSE MAKES THE LISTVIEW SCROLL FROM BOTTOM TO TOP
           reverse: true,
           itemCount: documents.length,
-          itemBuilder: (ctx, index) => Text(
-            documents[index]['text'],
-          ),
+          // itemBuilder: (ctx, index) => Text(
+          //   documents[index]['text'],
+          // ),
+          itemBuilder: (ctx, index) => MessageBubble(documents[index]['text']),
         );
       },
     );

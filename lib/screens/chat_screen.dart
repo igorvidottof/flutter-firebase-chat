@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_module/widgets/chat/message_bubble.dart';
 import 'package:firebase_module/widgets/chat/messages.dart';
 import 'package:firebase_module/widgets/chat/new_message.dart';
 import 'package:flutter/material.dart';
