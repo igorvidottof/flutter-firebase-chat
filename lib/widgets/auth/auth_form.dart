@@ -52,7 +52,7 @@ class _AuthFormState extends State<AuthForm> {
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                // mainAxisSize: MainAxisSize.min,
                 children: [
                   TextFormField(
                     key: ValueKey('email'),

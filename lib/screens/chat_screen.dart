@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_module/widgets/chat/messages.dart';
+import 'package:firebase_module/widgets/chat/new_message.dart';
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -38,33 +40,16 @@ class ChatScreen extends StatelessWidget {
       ),
       // Stream is a type which emits a new value whenever a data source changes
       // builder reruns whenever some data changes
-      body: StreamBuilder(
-          stream: Firestore.instance
-              .collection('/chats/4zTCC33NBwtmFCVx1AWW/messages')
-              .snapshots(),
-          builder: (ctx, streamSnapshot) {
-            if (streamSnapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            final querySnapshot = streamSnapshot.data as QuerySnapshot;
-            final documents = querySnapshot.documents;
-            return ListView.builder(
-              itemCount: documents.length,
-              itemBuilder: (ctx, index) => Container(
-                padding: EdgeInsets.all(8),
-                child: Text(documents[index]['text']),
-              ),
-            );
-          }),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          Firestore.instance
-              .collection('/chats/4zTCC33NBwtmFCVx1AWW/messages')
-              .add({'text': 'Another Hello World'});
-        },
+      body: Container(
+        child: Column(
+          children: [
+            // Expanded MAKES THE MESSAGES LISTVIEW TAKE ALL THE SPACE OF THE SCREEN IT CAN GET
+            Expanded(
+              child: Messages(),
+            ),
+            NewMessage(),
+          ],
+        ),
       ),
     );
   }
