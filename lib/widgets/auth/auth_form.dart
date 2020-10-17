@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_module/widgets/pickers/user_image_picker.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +8,7 @@ class AuthForm extends StatefulWidget {
     String email,
     String password,
     String userName,
+    File image,
     bool isLogin,
     BuildContext ctx,
   ) submitFn;
@@ -23,8 +26,23 @@ class _AuthFormState extends State<AuthForm> {
   var _userEmail = '';
   var _userName = '';
   var _userPassword = '';
+  File _userImageFile;
+
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
 
   void _trySubmit() {
+    if (!_isLogin && _userImageFile == null) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Please pick an image'),
+          backgroundColor: Theme.of(context).errorColor,
+        ),
+      );
+      return;
+    }
+
     // triggers all the validators of all TextFormFields of the Form
     // AND RETURNS TRUE IF THE VALIDATORS PASSED OR FALSE ON THE CONTRARY
     final isValid = _formKey.currentState.validate();
@@ -36,6 +54,7 @@ class _AuthFormState extends State<AuthForm> {
         _userEmail.trim(),
         _userPassword,
         _userName.trim(),
+        _userImageFile,
         _isLogin,
         context,
       );
@@ -54,7 +73,7 @@ class _AuthFormState extends State<AuthForm> {
               key: _formKey,
               child: Column(
                 children: [
-                  if (!_isLogin) UserImagePicker(),
+                  if (!_isLogin) UserImagePicker(_pickedImage),
                   TextFormField(
                     key: ValueKey('email'),
                     validator: (value) {
