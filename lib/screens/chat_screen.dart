@@ -1,9 +1,42 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_module/widgets/chat/messages.dart';
 import 'package:firebase_module/widgets/chat/new_message.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
+class ChatScreen extends StatefulWidget {
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends State<ChatScreen> {
+  // ASKING FOR PERMISSIONS TO SEND PUSH NOTIFICATIONS ON IOS DEVICES
+  @override
+  void initState() {
+    final firebaseMessaging = FirebaseMessaging();
+    firebaseMessaging.requestNotificationPermissions();
+
+    // CONFIGURING PUSH NOTIFICATIONS
+    firebaseMessaging.configure(
+      // WHEN THE APP IS OPENED IN THE FOREGROUND
+      onMessage: (message) {
+        print(message);
+        return;
+      },
+      // WHEN THE APP IS CLOSED
+      onLaunch: (message) {
+        print(message);
+        return;
+      },
+      // WHEN THE APP IS OPENED IN BACKGROUND
+      onResume: (message) {
+        print(message);
+        return;
+      },
+    );
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
