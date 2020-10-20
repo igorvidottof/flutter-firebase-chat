@@ -13,6 +13,7 @@ class _ChatScreenState extends State<ChatScreen> {
   // ASKING FOR PERMISSIONS TO SEND PUSH NOTIFICATIONS ON IOS DEVICES
   @override
   void initState() {
+    super.initState();
     final firebaseMessaging = FirebaseMessaging();
     firebaseMessaging.requestNotificationPermissions();
 
@@ -21,16 +22,19 @@ class _ChatScreenState extends State<ChatScreen> {
       // WHEN THE APP IS OPENED IN FOREGROUND
       onMessage: (message) {
         print(message);
+        print('FOREGROUND');
         return;
       },
       // WHEN THE APP IS CLOSED
       onLaunch: (message) {
         print(message);
+        print('CLOSED');
         return;
       },
       // WHEN THE APP IS OPENED IN BACKGROUND
       onResume: (message) {
         print(message);
+        print('BACKGROUND');
         return;
       },
     );
@@ -41,7 +45,6 @@ class _ChatScreenState extends State<ChatScreen> {
     // THIS WILL MAKE ANY NOTIFICATION SET TO THIS TOPIC 'chat'
     // REACH THIS DEVICE
     firebaseMessaging.subscribeToTopic('chat');
-    super.initState();
   }
 
   @override
@@ -51,6 +54,8 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Text('FlutterChat'),
         actions: [
           DropdownButton(
+            // EXCLUDE THE GREYSH UNDERLINE USED BY DEFAULT
+            underline: Container(),
             icon: Icon(
               Icons.more_vert,
               color: Theme.of(context).primaryIconTheme.color,
