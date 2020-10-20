@@ -18,7 +18,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     // CONFIGURING PUSH NOTIFICATIONS
     firebaseMessaging.configure(
-      // WHEN THE APP IS OPENED IN THE FOREGROUND
+      // WHEN THE APP IS OPENED IN FOREGROUND
       onMessage: (message) {
         print(message);
         return;
@@ -34,6 +34,13 @@ class _ChatScreenState extends State<ChatScreen> {
         return;
       },
     );
+    // THIS TOKEN IS USED SEND PUSH NOTIFICATIONS TO SPECIFIC DEVICES, IF NEEDED
+    // IN A CHAT BETWEEN 2 PEOPLE, FOR EXAMPLE
+    // firebaseMessaging.getToken();
+
+    // THIS WILL MAKE ANY NOTIFICATION SET TO THIS TOPIC 'chat'
+    // REACH THIS DEVICE
+    firebaseMessaging.subscribeToTopic('chat');
     super.initState();
   }
 
